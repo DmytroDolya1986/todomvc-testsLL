@@ -4,7 +4,7 @@ from selene.support.jquery_style_selectors import s
 from selene.support.shared.jquery_style import ss
 
 
-def test_complete_tasks():
+def test_complete():
     browser.open('http://todomvc.com/examples/emberjs/')
 
     s('#new-todo').type('a').press_enter()
@@ -13,7 +13,8 @@ def test_complete_tasks():
 
     ss('#todo-list > li').should(have.exact_texts('a', 'b', 'c'))
 
-    ss('#todo-list > li').element_by(have.exact_text('b')).element('.toggle').click()
-    ss('#todo-list > li').filtered_by(have.css_class('completed')).should(have.exact_text('b'))
-    ss('#todo-list > li').filtered_by(have.no.css_class('completed')).should(have.exact_texts('a', 'c'))
+    s('#todo-list>li:nth-of-type(2) .toggle').click()
+    ss('#todo-list>li.completed').should(have.exact_text('b'))
+    ss('#todo-list>li:not(.completed)').should(have.exact_texts('a', 'c'))
+
 
